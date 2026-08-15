@@ -1,0 +1,1720 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Famisariato </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F0D78C;
+            --gold-dark: #9A7B2C;
+            --wine: #6B2737;
+            --wine-deep: #3B0918;
+            --cream: #FBF7F0;
+            --dark-bg: #0D0A07;
+            --card-bg: rgba(18, 15, 11, 0.9);
+            --glass: rgba(22, 18, 13, 0.88);
+            --text-primary: #F5EFE6;
+            --text-secondary: #C4B8A7;
+            --danger: #C0392B;
+            --danger-hover: #E74C3C;
+            --success: #27AE60;
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 32px;
+            --radius-xl: 60px;
+            --shadow-gold: 0 4px 24px rgba(212, 175, 55, 0.25);
+            --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.5);
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(ellipse at 20% 10%, #1f1915 0%, #0a0704 55%, #030201 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            letter-spacing: 0.01em;
+            line-height: 1.55;
+        }
+
+        h1, h2, h3, .serif, .product-title, .tab-btn, .invoice-title, .total-final, .stats-total-card .value, .stats-heading, .hero-tagline {
+            font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+            letter-spacing: 0.02em;
+        }
+
+        /* ── HERO ─────────────────────────── */
+        .hero {
+            background: linear-gradient(160deg, rgba(12, 5, 2, 0.95) 0%, rgba(45, 12, 20, 0.9) 40%, rgba(18, 8, 4, 0.95) 100%);
+            text-align: center;
+            padding: 55px 24px 45px;
+            border-bottom: 2px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -30%;
+            width: 160%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.07) 0%, transparent 70%);
+            pointer-events: none;
+            animation: heroGlow 8s ease-in-out infinite;
+        }
+        @keyframes heroGlow {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.08) rotate(1deg); }
+        }
+        .hero h1 {
+            font-size: clamp(2.6rem, 8vw, 4.5rem);
+            font-weight: 900;
+            background: linear-gradient(180deg, #FFF8E7 0%, #D4AF37 45%, #8B6914 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.6));
+        }
+        .hero-tagline {
+            color: #D4AF37;
+            font-size: 1.15rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 6px;
+            position: relative;
+            z-index: 1;
+            opacity: 0.85;
+        }
+
+        /* ── TABS ─────────────────────────── */
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 35px 20px 25px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: rgba(15, 12, 8, 0.8);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1.5px solid rgba(212, 175, 55, 0.45);
+            padding: 13px 44px;
+            border-radius: var(--radius-xl);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #FFECB3;
+            cursor: pointer;
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+        }
+        .tab-btn i {
+            margin-right: 9px;
+            color: var(--gold);
+            transition: color var(--transition);
+        }
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--gold), #a67c1e);
+            opacity: 0;
+            transition: opacity var(--transition);
+            z-index: -1;
+            border-radius: var(--radius-xl);
+        }
+        .tab-btn.active, .tab-btn:hover {
+            color: #1f140c;
+            border-color: var(--gold-light);
+            box-shadow: var(--shadow-gold);
+            transform: translateY(-2px);
+        }
+        .tab-btn.active::after, .tab-btn:hover::after {
+            opacity: 1;
+        }
+        .tab-btn.active i, .tab-btn:hover i {
+            color: #1f140c;
+        }
+
+        /* ── PANELS ───────────────────────── */
+        .panel {
+            display: none;
+            max-width: 1450px;
+            margin: 0 auto;
+            padding: 15px 22px 40px;
+            animation: fadeSlideIn 0.35s ease;
+        }
+        .panel.active {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── SEARCH BAR ──────────────────── */
+        .search-bar {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .search-bar input, .search-bar select {
+            flex: 2;
+            min-width: 180px;
+            background: rgba(22, 16, 10, 0.85);
+            border: 1.5px solid rgba(212, 175, 55, 0.45);
+            padding: 13px 20px;
+            border-radius: var(--radius-xl);
+            color: #FFF;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: all var(--transition);
+            backdrop-filter: blur(6px);
+        }
+        .search-bar input:focus, .search-bar select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+            background: rgba(30, 22, 14, 0.95);
+        }
+        .search-bar select {
+            flex: 1;
+            min-width: 140px;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23D4AF37' fill='none' stroke-width='2'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            padding-right: 40px;
+        }
+        .search-bar button {
+            padding: 13px 24px;
+            border-radius: var(--radius-xl);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.4px;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            white-space: nowrap;
+        }
+        .btn-clear {
+            background: rgba(80, 70, 60, 0.7);
+            color: #FFF;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-clear:hover {
+            background: rgba(100, 88, 76, 0.85);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+        .btn-outline-danger {
+            background: transparent;
+            color: #e0b0a0;
+            border: 1.5px solid rgba(200, 100, 80, 0.5);
+        }
+        .btn-outline-danger:hover {
+            background: rgba(180, 60, 40, 0.25);
+            border-color: #c0392b;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 18px rgba(192, 57, 43, 0.25);
+        }
+
+        /* ── PRODUCT CARDS ───────────────── */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+            gap: 22px;
+            margin: 30px 0;
+        }
+        .product-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(212, 175, 55, 0.35);
+            border-radius: var(--radius-lg);
+            padding: 22px 20px 20px;
+            transition: all var(--transition);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--gold);
+            box-shadow: 0 16px 48px rgba(212, 175, 55, 0.2), 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: all var(--transition);
+        }
+        .product-card:hover::before {
+            width: 140px;
+            height: 140px;
+            top: -50px;
+            right: -50px;
+        }
+        .product-category {
+            color: var(--gold);
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            opacity: 0.8;
+        }
+        .product-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 6px 0 10px;
+            color: #FFF8F0;
+            line-height: 1.3;
+        }
+        .product-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--gold-light);
+            margin: 8px 0;
+            letter-spacing: 0.5px;
+        }
+        .product-stock {
+            font-size: 0.78rem;
+            color: #B8A890;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .product-stock i {
+            color: var(--gold);
+            font-size: 0.7rem;
+        }
+        .btn-add-card {
+            background: linear-gradient(135deg, #D4AF37 0%, #b57c1c 100%);
+            border: none;
+            padding: 12px 18px;
+            width: 100%;
+            border-radius: var(--radius-xl);
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: 14px;
+            cursor: pointer;
+            color: #1a120c;
+            letter-spacing: 0.6px;
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(180, 120, 30, 0.3);
+            z-index: 1;
+        }
+        .btn-add-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(212, 175, 55, 0.45);
+            background: linear-gradient(135deg, #E8C547 0%, #c98a20 100%);
+        }
+        .btn-add-card:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 8px rgba(180, 120, 30, 0.4);
+            transition: 0.1s;
+        }
+        .btn-add-card .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            animation: rippleEffect 0.65s ease-out forwards;
+            pointer-events: none;
+        }
+        @keyframes rippleEffect {
+            from { width: 10px; height: 10px; opacity: 1; }
+            to { width: 300px; height: 300px; opacity: 0; transform: translate(-50%, -50%); }
+        }
+
+        /* ── CART ─────────────────────────── */
+        .cart-container {
+            background: rgba(10, 8, 5, 0.82);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+            border: 1.5px solid rgba(212, 175, 55, 0.45);
+            margin-top: 35px;
+            box-shadow: var(--shadow-card);
+        }
+        .section-heading {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #F5E7C8, #D4AF37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 5px solid var(--gold);
+            padding-left: 16px;
+        }
+        .section-heading i {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: var(--gold);
+            font-size: 1rem;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .form-grid input {
+            background: rgba(22, 16, 10, 0.85);
+            border: 1.5px solid rgba(212, 175, 55, 0.4);
+            padding: 12px 18px;
+            border-radius: var(--radius-xl);
+            color: #FFF;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+        }
+        .form-grid input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 6px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .cart-item span {
+            font-weight: 500;
+        }
+        .remove-item-btn {
+            background: rgba(200, 50, 40, 0.55);
+            border: none;
+            color: #FFF;
+            padding: 7px 14px;
+            border-radius: var(--radius-xl);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all var(--transition);
+            letter-spacing: 0.3px;
+        }
+        .remove-item-btn:hover {
+            background: rgba(220, 60, 50, 0.8);
+            transform: scale(1.04);
+            box-shadow: 0 3px 12px rgba(200, 50, 40, 0.4);
+        }
+        .total-final {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gold-light);
+            border-top: 2px solid var(--gold);
+            padding-top: 16px;
+            margin-top: 14px;
+            letter-spacing: 0.5px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #D4AF37 0%, #9e7618 100%);
+            color: #1a120c;
+            font-weight: 800;
+            padding: 15px 28px;
+            border-radius: var(--radius-xl);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            letter-spacing: 0.7px;
+            transition: all var(--transition);
+            box-shadow: 0 6px 22px rgba(180, 120, 30, 0.35);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+            background: linear-gradient(135deg, #E8C547 0%, #b5841e 100%);
+        }
+        .btn-primary:active {
+            transform: scale(0.95);
+            transition: 0.1s;
+        }
+
+        /* ── ADMIN FORM ──────────────────── */
+        .form-admin {
+            background: var(--glass);
+            padding: 30px 24px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 35px;
+            border: 1.5px solid rgba(212, 175, 55, 0.35);
+            box-shadow: var(--shadow-card);
+        }
+        .form-admin .form-grid input {
+            background: rgba(22, 16, 10, 0.85);
+            border: 1.5px solid rgba(212, 175, 55, 0.4);
+            padding: 12px 18px;
+            border-radius: var(--radius-xl);
+            color: #FFF;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+        }
+        .form-admin .form-grid input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+
+        /* ── TABLE ────────────────────────── */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+        table {
+            width: 100%;
+            background: rgba(8, 6, 4, 0.7);
+            border-collapse: collapse;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+            font-size: 0.9rem;
+        }
+        th {
+            color: var(--gold-light);
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        tr:hover td {
+            background: rgba(212, 175, 55, 0.04);
+        }
+        .editable-stock, .editable-price {
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: all var(--transition);
+            display: inline-block;
+            min-width: 40px;
+            text-align: center;
+        }
+        .editable-stock:hover, .editable-price:hover {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+        .btn-danger {
+            background: #a13223;
+            color: #FFF;
+            padding: 8px 18px;
+            border-radius: var(--radius-xl);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.4px;
+            transition: all var(--transition);
+        }
+        .btn-danger:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(192, 57, 43, 0.4);
+        }
+        .btn-danger:active {
+            transform: scale(0.94);
+            transition: 0.1s;
+        }
+
+        /* ── STATS ────────────────────────── */
+        .stats-dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px;
+            margin-bottom: 35px;
+            justify-content: center;
+        }
+        .stats-total-card {
+            flex: 1;
+            min-width: 210px;
+            background: linear-gradient(160deg, rgba(212, 175, 55, 0.18), rgba(0, 0, 0, 0.88));
+            border: 1.5px solid var(--gold);
+            border-radius: var(--radius-lg);
+            padding: 28px 20px;
+            text-align: center;
+            transition: all var(--transition);
+            backdrop-filter: blur(8px);
+            box-shadow: var(--shadow-card);
+        }
+        .stats-total-card:hover {
+            transform: translateY(-6px);
+            border-color: #ffdf8c;
+            box-shadow: 0 16px 40px rgba(212, 175, 55, 0.2);
+        }
+        .stats-total-card .label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #FFE5B4;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .stats-total-card .value {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--gold-light);
+            letter-spacing: 1px;
+        }
+        .stats-sub {
+            font-size: 0.75rem;
+            color: #c4a86c;
+            margin-top: 7px;
+            opacity: 0.8;
+        }
+        .stats-table-container {
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+        }
+        .stats-table {
+            width: 100%;
+            background: rgba(8, 6, 4, 0.7);
+            border-collapse: collapse;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        .stats-table th, .stats-table td {
+            padding: 11px 14px;
+            text-align: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            font-size: 0.82rem;
+        }
+        .stats-table th {
+            background: rgba(0, 0, 0, 0.6);
+            color: var(--gold-light);
+            font-weight: 700;
+            letter-spacing: 0.6px;
+        }
+
+        /* ── INVOICE MODAL ────────────────── */
+        .invoice-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.94);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 30px 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .invoice-card {
+            max-width: 380px;
+            width: 100%;
+            margin: 20px auto;
+            background: #ffffff;
+            color: #000000;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .invoice-inner {
+            padding: 16px 18px;
+        }
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .invoice-header h2 {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 2px;
+        }
+        .invoice-header p {
+            font-size: 0.55rem;
+            color: #000;
+            margin: 0;
+            line-height: 1.2;
+        }
+        .ticket-detail-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.6rem;
+            line-height: 1.3;
+        }
+        .ticket-client-row {
+            padding: 4px 6px;
+            margin: 6px 0;
+            font-size: 0.55rem;
+        }
+        .ticket-items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 6px 0;
+            font-size: 0.55rem;
+        }
+        .ticket-items-table th {
+            padding: 4px 2px;
+            text-align: left;
+            font-size: 0.55rem;
+        }
+        .ticket-items-table td {
+            padding: 4px 2px;
+        }
+        .ticket-totals {
+            margin: 8px 0;
+            padding-top: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-align: right;
+        }
+        .ticket-footer {
+            text-align: center;
+            margin-top: 8px;
+            padding-top: 6px;
+            font-size: 0.5rem;
+        }
+        .ticket-signature {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0 4px;
+            font-size: 0.55rem;
+        }
+        .ticket-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            justify-content: center;
+            padding: 8px;
+        }
+        .ticket-actions button {
+            padding: 8px 20px;
+            border-radius: var(--radius-xl);
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all var(--transition);
+            font-size: 0.8rem;
+        }
+        .ticket-actions .btn-primary {
+            font-size: 0.8rem;
+            padding: 8px 20px;
+            background: #000;
+            color: #fff;
+        }
+        .ticket-actions .btn-primary:hover {
+            background: #333;
+        }
+
+        /* ── HISTORY MODAL (NUEVO) ───────── */
+        .history-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.94);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 30px 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .history-card {
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1.5px solid var(--gold);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-card);
+        }
+        .history-card h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-light);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 10px;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .history-table th, .history-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .history-table th {
+            color: var(--gold);
+            font-weight: 700;
+        }
+        .btn-close-history {
+            margin-top: 20px;
+            background: var(--gold);
+            color: #1a120c;
+            padding: 10px 30px;
+            border: none;
+            border-radius: var(--radius-xl);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        .btn-close-history:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+        /* ── NUEVO: botón de reinicio dentro del historial ── */
+        .btn-reset-history {
+            background: #a13223;
+            color: #fff;
+            padding: 8px 20px;
+            border: none;
+            border-radius: var(--radius-xl);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            margin-right: 10px;
+        }
+        .btn-reset-history:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(192, 57, 43, 0.4);
+        }
+        /* ── TOAST ────────────────────────── */
+        .custom-toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: #2e7d32;
+            color: #FFF;
+            padding: 14px 26px;
+            border-radius: var(--radius-xl);
+            z-index: 9999;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+            animation: toastIn 0.35s ease, toastOut 0.35s ease 1.7s forwards;
+            font-size: 0.9rem;
+        }
+        @keyframes toastIn {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes toastOut {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(30px); opacity: 0; }
+        }
+
+        /* ── FOOTER ───────────────────────── */
+        footer {
+            background: #050403;
+            text-align: center;
+            padding: 22px;
+            margin-top: 50px;
+            border-top: 1px solid var(--gold);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: #8a7a60;
+        }
+
+        /* ── EMPTY STATE ──────────────────── */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.1rem;
+            color: #9a8b75;
+            font-style: italic;
+        }
+
+        /* ── RESPONSIVE ──────────────────── */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .tab-btn { padding: 10px 24px; font-size: 0.85rem; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+            .stats-total-card .value { font-size: 2rem; }
+            .search-bar { flex-direction: column; }
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            .invoice-overlay, .invoice-overlay * { visibility: visible; }
+            .invoice-overlay {
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%; background: white;
+                backdrop-filter: none;
+                padding: 0; margin: 0;
+                display: block !important;
+                height: auto;
+            }
+            .invoice-card { max-width: 100%; margin: 0 auto; box-shadow: none; border: none; }
+            .ticket-actions { display: none; }
+            @page { size: auto; margin: 0.2cm; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1><i class="fas fa-wine-bottle"></i> FAMISARIATO</h1>
+        <p class="hero-tagline">Licoreria · Inventario </p>
+    </div>
+
+    <div class="tabs-container">
+        <button class="tab-btn active" data-tab="seller"><i class="fas fa-cash-register"></i> PUNTO DE VENTA</button>
+        <button class="tab-btn" data-tab="admin"><i class="fas fa-chart-line"></i> ADMINISTRADOR</button>
+    </div>
+
+    <!-- ── SELLER PANEL ─────────────────────── -->
+    <div id="sellerPanel" class="panel active">
+        <div class="search-bar">
+            <input type="text" id="searchProduct" placeholder="🔍 Buscar producto (ej: BUDWEISER lt 355cc)">
+            <select id="groupFilter"><option value="all">Todos los grupos</option></select>
+            <button id="clearSearchBtn" class="btn-clear"><i class="fas fa-times"></i> Limpiar</button>
+            <button id="forceResetBtn" class="btn-outline-danger"><i class="fas fa-sync-alt"></i> Reiniciar Stock</button>
+        </div>
+        <div id="productsContainer" class="products-grid"></div>
+
+        <div class="cart-container">
+            <div class="section-heading"><i class="fas fa-user-circle"></i> Datos del Cliente</div>
+            <div class="form-grid" style="margin-bottom: 20px;">
+                <input type="text" id="custName" placeholder="Nombre *">
+                <input type="text" id="custRuc" placeholder="RUC / C.I.">
+                <input type="text" id="custPhone" placeholder="Teléfono">
+                <input type="text" id="custAddress" placeholder="Dirección">
+            </div>
+            <div class="section-heading"><i class="fas fa-shopping-cart"></i> Pedido Actual</div>
+            <div id="cartItemsList"></div>
+            <div id="cartTotals"></div>
+            <button id="generateInvoiceBtn" class="btn-primary" style="width:100%; margin-top:20px;">
+                <i class="fas fa-file-invoice"></i> GENERAR TICKET
+            </button>
+        </div>
+    </div>
+
+    <!-- ── ADMIN PANEL ──────────────────────── -->
+    <div id="adminPanel" class="panel">
+        <div class="form-admin">
+            <div class="section-heading"><i class="fas fa-plus-circle"></i> Nuevo Producto</div>
+            <div class="form-grid">
+                <input type="text" id="prodGroup" placeholder="Grupo">
+                <input type="text" id="prodType" placeholder="Producto">
+                <input type="number" id="prodPrice" placeholder="Precio" step="0.01">
+                <input type="number" id="prodStock" placeholder="Stock">
+            </div>
+            <button id="addProductBtn" class="btn-primary" style="margin-top:20px;">
+                <i class="fas fa-save"></i> Guardar Producto
+            </button>
+        </div>
+
+        <div class="section-heading"><i class="fas fa-boxes"></i> Inventario Completo</div>
+        <div class="table-wrapper">
+            <table id="inventoryTable">
+                <thead> <th>Grupo</th><th>Producto</th><th>Precio</th><th>Stock</th><th></th> </thead>
+                <tbody id="inventoryTbody"></tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 45px;">
+            <div class="section-heading"><i class="fas fa-chart-pie"></i> Estadísticas de Ventas</div>
+            <div id="statsComplete"></div>
+            <div style="display: flex; gap: 16px; justify-content: flex-end; margin-top: 28px; flex-wrap: wrap; align-items: center;">
+                <button id="resetSalesStatsBtn" class="btn-danger"><i class="fas fa-trash-alt"></i> Reiniciar Estadísticas</button>
+                <button id="resetInventoryFullBtn" class="btn-outline-danger" style="background:transparent; color:#e0b0a0; border:1.5px solid rgba(200,100,80,0.5); padding:10px 22px; border-radius:60px; cursor:pointer;">
+                    <i class="fas fa-undo-alt"></i> Reiniciar Stock (todo a 10)
+                </button>
+                <!-- Botón de historial convertido en engranaje pequeño -->
+                <button id="showHistoryBtn" style="background: #2c3e50; color: #fff; border: none; padding: 10px 14px; border-radius: 60px; cursor: pointer; font-size: 1.1rem; transition: all 0.2s;" title="Historial de compras">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer><p>Famisariato · Excelencia y Tradición</p></footer>
+
+    <!-- ── INVOICE MODAL ────────────────────── -->
+    <div id="invoiceModal" class="invoice-overlay">
+        <div class="invoice-card">
+            <div class="invoice-inner">
+                <div class="invoice-header">
+                    <h2>FAMISARIATO</h2>
+                    <p>Av. Alejo Lascano, Jipijapa<br>Tel: +593 979017728</p>
+                </div>
+                <div style="margin: 8px 0; font-size: 0.8rem;">
+                    Nº FACTURA: <span id="invoiceNumber">001-001-0001</span>
+                </div>
+                <div class="ticket-detail-row">
+                    <span>Fecha: <span id="invoiceDate"></span></span>
+                    <span>Aut. SRI: 1315544963001</span>
+                </div>
+                <div class="ticket-client-row">
+                    <strong>Cliente:</strong> <span id="invName"></span> &nbsp;|&nbsp; <strong>RUC/CI:</strong> <span id="invRuc"></span><br>
+                    <strong>Direc:</strong> <span id="invAddress"></span> &nbsp;|&nbsp; <strong>Tel:</strong> <span id="invPhone"></span>
+                </div>
+                <table class="ticket-items-table">
+                    <thead><tr><th>CANT</th><th>DESCRIPCIÓN</th><th>P.UNIT</th><th>P.TOTAL</th></tr></thead>
+                    <tbody id="invoiceItemsBody"></tbody>
+                </table>
+                <div class="ticket-totals">
+                    <div>TOTAL: $<span id="invTotal">0.00</span></div>
+                </div>
+                <div class="ticket-signature">
+                </div>
+                <div class="ticket-footer">
+                    ¡Gracias por su visita!<br>
+                    Documento válido como comprobante fiscal
+                </div>
+            </div>
+            <div class="ticket-actions">
+                <button class="btn-primary" onclick="window.print()"><i class="fas fa-print"></i> Imprimir</button>
+                <button id="closeInvoiceBtn" class="btn-danger"><i class="fas fa-times"></i> Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── HISTORY MODAL (NUEVO) ────────────── -->
+    <div id="historyModal" class="history-overlay">
+        <div class="history-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px;">
+                <h2 style="margin:0; border:none; padding:0;"><i class="fas fa-history"></i> Historial de Compras (Reabastecimiento)</h2>
+                <button id="resetHistoryBtn" class="btn-reset-history"><i class="fas fa-trash-alt"></i> Reiniciar historial</button>
+            </div>
+            <div id="historyContent">
+                <table class="history-table">
+                    <thead>
+                        <tr><th>Producto</th><th>Unidades Compradas (Acumulado)</th></tr>
+                    </thead>
+                    <tbody id="historyTableBody"></tbody>
+                </table>
+            </div>
+            <div style="text-align: right; margin-top: 15px;">
+                <button class="btn-close-history" id="closeHistoryBtn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ──────────────────────────────────────
+        // CATÁLOGO BASE — STOCK INICIAL 0
+        // PRECIOS CORREGIDOS
+        // ──────────────────────────────────────
+        const CATALOGO_BASE = [
+            { group: "Cerveza", name: "PILSENER LATA 269CC - CAJA", price: 20.00, stock: 0 },
+            { group: "Cerveza", name: "PILSENER LATA 269CC - SIXPACK", price: 5.00, stock: 0 },
+            { group: "Cerveza", name: "PILSENER LATA 269CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "PILSENER LATA 355CC - CAJA", price: 23.00, stock: 0 },
+            { group: "Cerveza", name: "PILSENER LATA 355CC - SIXPACK", price: 6.00, stock: 0 },
+            { group: "Cerveza", name: "PILSENER LATA 355CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "PILSENER LATA 473CC - CAJA", price: 28.00, stock: 0 },
+            { group: "Cerveza", name: "PILSENER LATA 473CC - SIXPACK", price: 7.00, stock: 0 },
+            { group: "Cerveza", name: "PILSENER LATA 473CC - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Cerveza", name: "PILS BOTELLA RET 330CC - SIXPACK", price: 6.00, stock: 0 },
+            { group: "Cerveza", name: "PILS BOTELLA RET 330CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "PILS BOTELLA 600CC - UNIDAD", price: 1.50, stock: 0 },
+            { group: "Cerveza", name: "PILSENER LIGHT 550 - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Cerveza", name: "CLUB BOTELLA 550 CC - UNIDAD", price: 1.75, stock: 0 },
+            { group: "Cerveza", name: "AMSTEL BOTELLA 355CC - CAJA", price: 28.00, stock: 0 },
+            { group: "Cerveza", name: "AMSTEL BOTELLA 355CC - SIXPACK", price: 7.25, stock: 0 },
+            { group: "Cerveza", name: "AMSTEL BOTELLA 355CC - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Cerveza", name: "AMSTEL LATA 355CC - SIXPACK", price: 0.00, stock: 0 },
+            { group: "Cerveza", name: "AMSTEL LATA 355CC - UNIDAD", price: 0.00, stock: 0 },
+            { group: "Cerveza", name: "AMSTEL LATA 269CC - CAJA", price: 20.00, stock: 0 },
+            { group: "Cerveza", name: "AMSTEL LATA 269CC - SIXPACK", price: 5.50, stock: 0 },
+            { group: "Cerveza", name: "AMSTEL LATA 269CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "BECK LATA 269CC - CAJA", price: 17.00, stock: 0 },
+            { group: "Cerveza", name: "BECK LATA 269CC - SIXPACK", price: 4.50, stock: 0 },
+            { group: "Cerveza", name: "BECK LATA 269CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "BIELA LATA 355CC - CAJA", price: 20.00, stock: 0 },
+            { group: "Cerveza", name: "BIELA LATA 355CC - SIXPACK", price: 5.50, stock: 0 },
+            { group: "Cerveza", name: "BIELA LATA 355CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "BIELA LATA 473CC - SIXPACK", price: 6.00, stock: 0 },
+            { group: "Cerveza", name: "BIELA LATA 473CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "BUDWEISER LATA 269CC - SIXPACK", price: 6.00, stock: 0 },
+            { group: "Cerveza", name: "BUDWEISER LATA 269CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "BUDWEISER BTLL 355cc - SIXPACK", price: 9.00, stock: 0 },
+            { group: "Cerveza", name: "BUDWEISER BTLL 355cc - UNIDAD", price: 1.50, stock: 0 },
+            { group: "Cerveza", name: "BUDWEISER lt 355cc - SIXPACK", price: 7.50, stock: 0 },
+            { group: "Cerveza", name: "BUDWEISER lt 355cc - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Cerveza", name: "CLUB BOTLL 330CC - CAJA", price: 26.00, stock: 0 },
+            { group: "Cerveza", name: "CLUB BOTLL 330CC - SIXPACK", price: 7.50, stock: 0 },
+            { group: "Cerveza", name: "CLUB BOTLL 330CC - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Cerveza", name: "CLUB RETORNABLE 330CC - CAJA", price: 28.00, stock: 0 },
+            { group: "Cerveza", name: "CLUB RETORNABLE 330CC - SIXPACK", price: 7.50, stock: 0 },
+            { group: "Cerveza", name: "CLUB RETORNABLE 330CC - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Cerveza", name: "CORONA 330CC - CAJA", price: 34.00, stock: 0 },
+            { group: "Cerveza", name: "CORONA 330CC - SIXPACK", price: 9.00, stock: 0 },
+            { group: "Cerveza", name: "CORONA 330CC - UNIDAD", price: 1.50, stock: 0 },
+            { group: "Cerveza", name: "CORONITA - CAJA", price: 24.00, stock: 0 },
+            { group: "Cerveza", name: "CORONITA - SIXPACK", price: 6.00, stock: 0 },
+            { group: "Cerveza", name: "CORONITA - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "CLUB PLATINO 355CC LATA - CAJA", price: 28.00, stock: 0 },
+            { group: "Cerveza", name: "CLUB PLATINO 355CC LATA - SIXPACK", price: 7.50, stock: 0 },
+            { group: "Cerveza", name: "CLUB PLATINO 355CC LATA - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Cerveza", name: "SIEMBRA LATA 473CC - CAJA", price: 20.00, stock: 0 },
+            { group: "Cerveza", name: "SIEMBRA LATA 473CC - SIXPACK", price: 5.50, stock: 0 },
+            { group: "Cerveza", name: "SIEMBRA LATA 473CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "SIEMBRA LATA 355CC - CAJA", price: 18.00, stock: 0 },
+            { group: "Cerveza", name: "SIEMBRA LATA 355CC - SIXPACK", price: 4.75, stock: 0 },
+            { group: "Cerveza", name: "SIEMBRA LATA 355CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "STELLA ARTOIS 330CC - CAJA", price: 36.00, stock: 0 },
+            { group: "Cerveza", name: "STELLA ARTOIS 330CC - SIXPACK", price: 10.00, stock: 0 },
+            { group: "Cerveza", name: "STELLA ARTOIS 330CC - UNIDAD", price: 1.50, stock: 0 },
+            { group: "Cerveza", name: "STELLA LATA 250CC - CAJA", price: 24.00, stock: 0 },
+            { group: "Cerveza", name: "STELLA LATA 250CC - SIXPACK", price: 6.00, stock: 0 },
+            { group: "Cerveza", name: "STELLA LATA 250CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "HEINEKEN LATA 355CC - CAJA", price: 28.00, stock: 0 },
+            { group: "Cerveza", name: "HEINEKEN LATA 355CC - SIXPACK", price: 7.50, stock: 0 },
+            { group: "Cerveza", name: "HEINEKEN LATA 355CC - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Cerveza", name: "HEINENKEN BOTELLA - CAJA", price: 32.00, stock: 0 },
+            { group: "Cerveza", name: "HEINENKEN BOTELLA - SIXPACK", price: 8.50, stock: 0 },
+            { group: "Cerveza", name: "HEINENKEN BOTELLA - UNIDAD", price: 1.50, stock: 0 },
+            { group: "Cerveza", name: "HEINENKEN LATA 269CC - CAJA", price: 24.00, stock: 0 },
+            { group: "Cerveza", name: "HEINENKEN LATA 269CC - SIXPACK", price: 6.00, stock: 0 },
+            { group: "Cerveza", name: "HEINENKEN LATA 269CC - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Cerveza", name: "MODELO 355CC - CAJA", price: 48.00, stock: 0 },
+            { group: "Cerveza", name: "MODELO 355CC - SIXPACK", price: 13.00, stock: 0 },
+            { group: "Cerveza", name: "MODELO 355CC - UNIDAD", price: 2.25, stock: 0 },
+            { group: "Cerveza", name: "SOL - CAJA", price: 31.00, stock: 0 },
+            { group: "Cerveza", name: "SOL - SIXPACK", price: 8.50, stock: 0 },
+            { group: "Cerveza", name: "SOL - UNIDAD", price: 1.50, stock: 0 },
+            { group: "Cerveza", name: "ROYAL DUCK - CAJA", price: 22.00, stock: 0 },
+            { group: "Cerveza", name: "ROYAL DUCK - SIXPACK", price: 6.00, stock: 0 },
+            { group: "Cerveza", name: "ROYAL DUCK - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Licor", name: "SANDY MAC - UNIDAD", price: 17.00, stock: 0 },
+            { group: "Licor", name: "BUCHANAMS - UNIDAD", price: 46.00, stock: 0 },
+            { group: "Licor", name: "JONNIE BLACK WHISKY - UNIDAD", price: 46.00, stock: 0 },
+            { group: "Licor", name: "JONNIE ROJO WHISKY - UNIDAD", price: 21.00, stock: 0 },
+            { group: "Licor", name: "BLUE BEAR - UNIDAD", price: 12.00, stock: 0 },
+            { group: "Licor", name: "JHON MORRIS AZUL - UNIDAD", price: 16.00, stock: 0 },
+            { group: "Licor", name: "BLACK AND WHITE - UNIDAD", price: 14.00, stock: 0 },
+            { group: "Licor", name: "SOMETHING ESPECIAL - UNIDAD", price: 20.00, stock: 0 },
+            { group: "Licor", name: "CHIVAS REGAL 750ML - UNIDAD", price: 45.00, stock: 0 },
+            { group: "Licor", name: "MISTER ALLEN - UNIDAD", price: 6.00, stock: 0 },
+            { group: "Licor", name: "CASTELLO - UNIDAD", price: 5.00, stock: 0 },
+            { group: "Licor", name: "EL CHARRO GOLD - UNIDAD", price: 16.50, stock: 0 },
+            { group: "Licor", name: "EL CHARRO SILVER - UNIDAD", price: 16.50, stock: 0 },
+            { group: "Licor", name: "TEQUILA AZTECA - UNIDAD", price: 15.00, stock: 0 },
+            { group: "Licor", name: "TRIBUTE GUITARRA WHISKY - UNIDAD", price: 18.00, stock: 0 },
+            { group: "Licor", name: "CRISTAL GRANDE - UNIDAD", price: 7.00, stock: 0 },
+            { group: "Licor", name: "CRISTAL PEQUEÑA - UNIDAD", price: 3.50, stock: 0 },
+            { group: "Licor", name: "CAÑA NEGRA GRAND - UNIDAD", price: 7.50, stock: 0 },
+            { group: "Licor", name: "CAÑA PEQUEÑA - UNIDAD", price: 3.50, stock: 0 },
+            { group: "Licor", name: "RUSSKAYA - UNIDAD", price: 7.00, stock: 0 },
+            { group: "Licor", name: "SIBERIAN - UNIDAD", price: 7.50, stock: 0 },
+            { group: "Licor", name: "SWITCH - UNIDAD", price: 3.00, stock: 0 },
+            { group: "Licor", name: "OLD PAR - UNIDAD", price: 40.00, stock: 0 },
+            { group: "Licor", name: "WHISKY SPECIAL QUEEN - UNIDAD", price: 6.00, stock: 0 },
+            { group: "Vino", name: "FRAILE GRANDE 750ML - UNIDAD", price: 4.00, stock: 0 },
+            { group: "Vino", name: "FRAILE PEQUEÑO - UNIDAD", price: 2.00, stock: 0 },
+            { group: "Vino", name: "FRAILE GRANDE 1500 ML - UNIDAD", price: 8.00, stock: 0 },
+            { group: "Vino", name: "VIÑA MAIPO - UNIDAD", price: 8.00, stock: 0 },
+            { group: "Vino", name: "TOCORNAL - UNIDAD", price: 6.00, stock: 0 },
+            { group: "Vino", name: "VIEJO VIÑEDO - UNIDAD", price: 5.00, stock: 0 },
+            { group: "Vino", name: "LAMBRUSCO - UNIDAD", price: 8.00, stock: 0 },
+            { group: "Vino", name: "MIRAFLORES - UNIDAD", price: 5.00, stock: 0 },
+            { group: "Vino", name: "CASILLERO DEL DIABLO - UNIDAD", price: 18.00, stock: 0 },
+            { group: "Vino", name: "LAVID BLEND - UNIDAD", price: 5.00, stock: 0 },
+            { group: "Vino", name: "SANGRIA - UNIDAD", price: 4.25, stock: 0 },
+            { group: "Vino", name: "VINO BALDORE - UNIDAD", price: 4.25, stock: 0 },
+            { group: "Vino", name: "HIELO - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Bebida", name: "GUITIG 1.5 LT - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Bebida", name: "GUITIG 2 LT - UNIDAD", price: 1.50, stock: 0 },
+            { group: "Bebida", name: "AGUA PERSONAL ALEMI - UNIDAD", price: 0.30, stock: 0 },
+            { group: "Bebida", name: "AGUA ALEMI GALON - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Bebida", name: "AGUA ALEMI BIDON - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Bebida", name: "AGUA DASANI 600ML - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Bebida", name: "AGUA DASANI 1.2L - UNIDAD", price: 0.75, stock: 0 },
+            { group: "Bebida", name: "JUGO D.V. NARANJA 1LT - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Bebida", name: "JUGO D.V. NARANJA 1,75LT - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Bebida", name: "INKA - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Bebida", name: "FANTA Y FIORA 1.35LT - UNIDAD", price: 1.10, stock: 0 },
+            { group: "Bebida", name: "SPRITE 1.35LT - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Bebida", name: "COCA COLA 1LT - UNIDAD", price: 1.10, stock: 0 },
+            { group: "Bebida", name: "COCA COLA 2LT - UNIDAD", price: 2.00, stock: 0 },
+            { group: "Bebida", name: "COCA COLA 3LT - UNIDAD", price: 3.00, stock: 0 },
+            { group: "Bebida", name: "COLAS 300ML - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Bebida", name: "FUZE TEA 1L - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Bebida", name: "NECTAR D.V CARTON 1L - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Bebida", name: "NECTAR D.V PEQ - UNIDAD", price: 0.45, stock: 0 },
+            { group: "Bebida", name: "VIVE 100 PEQUEÑO - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Bebida", name: "VIVE 100 GRANDE - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Bebida", name: "POWER 1LT - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Bebida", name: "POWER 350ML - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Bebida", name: "LECHE TONI GRANDE - UNIDAD", price: 0.90, stock: 0 },
+            { group: "Bebida", name: "LECHE TONI PEQ - UNIDAD", price: 0.60, stock: 0 },
+            { group: "Bebida", name: "TONI MIX - UNIDAD", price: 0.90, stock: 0 },
+            { group: "Bebida", name: "GELATONI - UNIDAD", price: 0.85, stock: 0 },
+            { group: "Bebida", name: "PROFIT - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Bebida", name: "MONSTER - UNIDAD", price: 2.50, stock: 0 },
+            { group: "Snack", name: "MIX PEQ - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Snack", name: "MIX GRANDE - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Snack", name: "SARITA PEQ - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Snack", name: "SARITA GRANDE - UNIDAD", price: 1.50, stock: 0 },
+            { group: "Snack", name: "LOCO CACHOS - UNIDAD", price: 0.30, stock: 0 },
+            { group: "Snack", name: "TOSTITOS GRANDES - UNIDAD", price: 1.50, stock: 0 },
+            { group: "Snack", name: "CHIFLE GRANDE - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Snack", name: "CHIFLE PEQUEÑO - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Snack", name: "TOSTITOS PEQ - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Snack", name: "NACHOS GRANDES - UNIDAD", price: 1.50, stock: 0 },
+            { group: "Snack", name: "NACHOS MEDIANOS - UNIDAD", price: 0.60, stock: 0 },
+            { group: "Snack", name: "TOSTITOS MEDIANOS - UNIDAD", price: 0.60, stock: 0 },
+            { group: "Snack", name: "RYSKOS PEQ - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Snack", name: "CARAMELOS JAZZ - UNIDAD", price: 0.05, stock: 0 },
+            { group: "Snack", name: "CANGUILPOP - UNIDAD", price: 0.60, stock: 0 },
+            { group: "Snack", name: "Tortolines peq - UNIDAD", price: 0.60, stock: 0 },
+            { group: "Snack", name: "Tortolines G - UNIDAD", price: 1.60, stock: 0 },
+            { group: "Snack", name: "TOSTACHOS PEQ - UNIDAD", price: 0.50, stock: 0 },
+            { group: "Snack", name: "TOSTACHOS GRAND - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Otros", name: "CLUB LATA 269 - CAJA", price: 22.00, stock: 0 },
+            { group: "Otros", name: "CLUB LATA 269 - SIXPACK", price: 5.50, stock: 0 },
+            { group: "Otros", name: "CLUB LATA 269 - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Otros", name: "CLUB BOTELLA 850CC - UNIDAD", price: 2.25, stock: 0 },
+            { group: "Otros", name: "FOGATA - UNIDAD", price: 0.10, stock: 0 },
+            { group: "Otros", name: "PASTA DE DIENTES - UNIDAD", price: 1.00, stock: 0 },
+            { group: "Otros", name: "JABON TOCADOR - UNIDAD", price: 1.25, stock: 0 },
+            { group: "Otros", name: "LIDER - UNIDAD", price: 0.35, stock: 0 },
+            { group: "Otros", name: "LIDER - CAJA X10", price: 3.00, stock: 0 },
+            { group: "Otros", name: "CARNIVAL - UNIDAD", price: 0.25, stock: 0 },
+            { group: "Otros", name: "CARNIVAL - CAJA X20", price: 3.00, stock: 0 },
+            { group: "Otros", name: "MALBORO D.CAP - UNIDAD", price: 0.35, stock: 0 },
+            { group: "Otros", name: "MALBORO D.CAP - CAJA X10", price: 3.00, stock: 0 },
+            { group: "Otros", name: "ORIS - UNIDAD", price: 0.25, stock: 0 },
+            { group: "Otros", name: "ORIS - CAJA X20", price: 3.00, stock: 0 },
+            { group: "Otros", name: "CORONA EN LATA - UNIDAD", price: 1.00, stock: 0 }
+        ];
+
+        let productos = [];
+        let ventas = {}; 
+        let compras = {}; // Historial de compras (reabastecimiento)
+        let carrito = [];
+        let nextId = 1;
+        let nextFactura = 1001;
+
+        function redondear(val) { return Math.round(val * 100) / 100; }
+
+        function inicializarProductos() {
+            productos = CATALOGO_BASE.map((p, idx) => ({
+                id: idx + 1,
+                group: p.group,
+                name: p.name,
+                price: p.price,
+                stock: 0 // Stock inicial 0
+            }));
+            nextId = productos.length + 1;
+        }
+
+        function guardarDatos() {
+            localStorage.setItem('famisariato_productos', JSON.stringify(productos));
+            localStorage.setItem('famisariato_ventas', JSON.stringify(ventas));
+            localStorage.setItem('famisariato_compras', JSON.stringify(compras)); // Guardar historial
+            localStorage.setItem('famisariato_nextFactura', nextFactura);
+            localStorage.setItem('famisariato_nextId', nextId);
+        }
+
+        function cargarDatos() {
+            const prodGuardados = localStorage.getItem('famisariato_productos');
+            if (prodGuardados) {
+                productos = JSON.parse(prodGuardados);
+                const ventasGuardadas = localStorage.getItem('famisariato_ventas');
+                ventas = ventasGuardadas ? JSON.parse(ventasGuardadas) : {};
+                const comprasGuardadas = localStorage.getItem('famisariato_compras');
+                compras = comprasGuardadas ? JSON.parse(comprasGuardadas) : {};
+                nextFactura = parseInt(localStorage.getItem('famisariato_nextFactura') || '1001');
+                nextId = parseInt(localStorage.getItem('famisariato_nextId') || String(productos.length + 1));
+            } else {
+                inicializarProductos();
+                ventas = {};
+                compras = {};
+                nextFactura = 1001;
+                guardarDatos();
+            }
+        }
+
+        // ── REGISTRAR COMPRA (REABASTECIMIENTO) ──
+        function registrarCompra(idProducto, cantidadAumentada) {
+            if (cantidadAumentada <= 0) return;
+            compras[idProducto] = (compras[idProducto] || 0) + cantidadAumentada;
+            guardarDatos();
+        }
+
+        // ── RENDER STATS ──────────────────────
+        function renderizarEstadisticas() {
+            const container = document.getElementById('statsComplete');
+            if (!container) return;
+            let gananciaTotal = 0, totalUnidades = 0, filasTabla = '';
+            productos.forEach(prod => {
+                const vendido = ventas[prod.id] || 0;
+                totalUnidades += vendido;
+                const gananciaProd = redondear(prod.price * vendido);
+                gananciaTotal += gananciaProd;
+                if (vendido > 0) {
+                    filasTabla += `<tr><td>${prod.name}</td><td>${vendido}</td><td>$${prod.price.toFixed(2)}</td><td>$${gananciaProd.toFixed(2)}</td></tr>`;
+                }
+            });
+            container.innerHTML = `
+            <div class="stats-dashboard">
+              <div class="stats-total-card"><div class="label">💰 GANANCIA TOTAL</div><div class="value">$${gananciaTotal.toFixed(2)}</div><div class="stats-sub">Venta</div></div>
+            </div>
+            <div style="text-align:center; margin:15px 0; font-weight:600;">📦 Unidades totales vendidas: ${totalUnidades}</div>
+            <div class="stats-table-container"><table class="stats-table"><thead><tr><th>Producto</th><th>Unidades</th><th>Precio Unit</th><th>Ganancia</th></tr></thead><tbody>${filasTabla || '<tr><td colspan="4">Sin ventas registradas aún</td></tr>'}</tbody></table></div>`;
+        }
+
+        // ── RENDER PRODUCTS ───────────────────
+        function renderizarProductos() {
+            const contenedor = document.getElementById('productsContainer');
+            if (!contenedor) return;
+            const busqueda = document.getElementById('searchProduct').value.toLowerCase().trim();
+            const filtroGrupo = document.getElementById('groupFilter').value;
+            let filtrados = productos.filter(p => p.stock > 0);
+            if (busqueda !== "") filtrados = filtrados.filter(p => p.name.toLowerCase().includes(busqueda));
+            if (filtroGrupo !== 'all') filtrados = filtrados.filter(p => p.group === filtroGrupo);
+            if (filtrados.length === 0) {
+                contenedor.innerHTML = '<div class="empty-state">🔍 No hay productos con stock que coincidan con la búsqueda</div>';
+                return;
+            }
+            contenedor.innerHTML = filtrados.map(p => `
+            <div class="product-card">
+              <div class="product-category">${p.group}</div>
+              <div class="product-title">${p.name}</div>
+              <div class="product-price">$${p.price.toFixed(2)}</div>
+              <div class="product-stock"><i class="fas fa-cubes"></i> Stock: ${p.stock}</div>
+              <button class="btn-add-card ripple-btn" data-id="${p.id}"><i class="fas fa-cart-plus"></i> Agregar</button>
+            </div>`).join('');
+            document.querySelectorAll('.btn-add-card').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    agregarRipple(e, this);
+                    agregarAlCarrito(parseInt(this.dataset.id));
+                });
+            });
+        }
+
+        // ── RIPPLE EFFECT ────────────────────
+        function agregarRipple(e, el) {
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            const rect = el.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+            el.appendChild(ripple);
+            ripple.addEventListener('animationend', () => ripple.remove());
+        }
+
+        // ── CART ──────────────────────────────
+        function agregarAlCarrito(idProd) {
+            const prod = productos.find(p => p.id === idProd);
+            if (!prod || prod.stock <= 0) { mostrarMensaje('Producto sin stock', 'error'); return; }
+            const existente = carrito.find(item => item.id === idProd);
+            if (existente) {
+                if (existente.cantidad + 1 > prod.stock) { mostrarMensaje(`Stock máximo: ${prod.stock}`, 'error'); return; }
+                existente.cantidad++;
+            } else {
+                carrito.push({ id: prod.id, nombre: `${prod.group} - ${prod.name}`, precio: prod.price, cantidad: 1 });
+            }
+            renderizarCarrito();
+            mostrarMensaje('Agregado al carrito');
+        }
+
+        function renderizarCarrito() {
+            const contenedor = document.getElementById('cartItemsList');
+            const totalsDiv = document.getElementById('cartTotals');
+            if (!contenedor) return;
+            if (carrito.length === 0) {
+                contenedor.innerHTML = '<div class="empty-state">✨ Carrito vacío ✨</div>';
+                totalsDiv.innerHTML = '<div class="total-final">Total: $0.00</div>';
+                return;
+            }
+            let subtotal = 0;
+            let html = '';
+            carrito.forEach((item, idx) => {
+                const totalItem = item.precio * item.cantidad;
+                subtotal += totalItem;
+                html += `<div class="cart-item"><span><strong>${item.cantidad}x</strong> ${item.nombre}</span><span>$${totalItem.toFixed(2)}</span><button class="remove-item-btn" data-index="${idx}"><i class="fas fa-trash"></i></button></div>`;
+            });
+            contenedor.innerHTML = html;
+            totalsDiv.innerHTML = `<div class="total-final">TOTAL: $${subtotal.toFixed(2)}</div>`;
+            document.querySelectorAll('.remove-item-btn').forEach(btn => btn.addEventListener('click', () => {
+                carrito.splice(parseInt(btn.dataset.index), 1);
+                renderizarCarrito();
+            }));
+        }
+
+        // ── INVOICE ───────────────────────────
+        function generarFactura() {
+            const nombreCliente = document.getElementById('custName').value.trim();
+            if (carrito.length === 0) { mostrarMensaje('Carrito vacío', 'error'); return; }
+            if (!nombreCliente) { mostrarMensaje('Nombre del cliente requerido', 'error'); return; }
+            for (let item of carrito) {
+                const prod = productos.find(p => p.id === item.id);
+                if (!prod || prod.stock < item.cantidad) { mostrarMensaje(`Stock insuficiente para ${item.nombre}`, 'error'); return; }
+            }
+            for (let item of carrito) {
+                const prod = productos.find(p => p.id === item.id);
+                prod.stock -= item.cantidad;
+                ventas[prod.id] = (ventas[prod.id] || 0) + item.cantidad;
+            }
+            const numFactura = `001-001-${nextFactura++}`;
+            document.getElementById('invoiceNumber').innerText = numFactura;
+            document.getElementById('invoiceDate').innerText = new Date().toLocaleDateString('es-EC', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            document.getElementById('invName').innerText = nombreCliente;
+            document.getElementById('invRuc').innerText = document.getElementById('custRuc').value || 'S/N';
+            document.getElementById('invAddress').innerText = document.getElementById('custAddress').value || 'N/A';
+            document.getElementById('invPhone').innerText = document.getElementById('custPhone').value || 'N/A';
+            const tbody = document.getElementById('invoiceItemsBody');
+            tbody.innerHTML = '';
+            let subtotal = 0;
+            for (let item of carrito) {
+                const totalItem = item.precio * item.cantidad;
+                subtotal += totalItem;
+                tbody.innerHTML += `<tr><td>${item.cantidad}</td><td>${item.nombre}</td><td>$${item.precio.toFixed(2)}</td><td>$${totalItem.toFixed(2)}</td></tr>`;
+            }
+            document.getElementById('invTotal').innerText = subtotal.toFixed(2);
+            document.getElementById('invoiceModal').style.display = 'flex';
+            carrito = [];
+            renderizarCarrito();
+            ['custName', 'custRuc', 'custPhone', 'custAddress'].forEach(id => document.getElementById(id).value = '');
+            guardarDatos();
+            renderizarProductos();
+            renderizarInventario();
+            renderizarEstadisticas();
+            mostrarMensaje('✅ Venta realizada con éxito');
+        }
+
+        // ── INVENTORY TABLE ──────────────────
+        function renderizarInventario() {
+            const tbody = document.getElementById('inventoryTbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            productos.forEach(p => {
+                const row = tbody.insertRow();
+                row.insertCell(0).innerText = p.group;
+                row.insertCell(1).innerText = p.name;
+
+                // PRECIO EDITABLE
+                const priceCell = row.insertCell(2);
+                const priceSpan = document.createElement('span');
+                priceSpan.className = 'editable-price';
+                priceSpan.innerText = `$${p.price.toFixed(2)}`;
+                priceSpan.title = 'Clic para editar precio';
+                priceSpan.onclick = () => {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.value = p.price;
+                    input.step = '0.01';
+                    input.style.width = '80px';
+                    input.style.background = 'rgba(22,16,10,0.9)';
+                    input.style.border = '1px solid #D4AF37';
+                    input.style.color = '#FFF';
+                    input.style.borderRadius = '20px';
+                    input.style.padding = '4px 10px';
+                    input.style.textAlign = 'center';
+                    input.onblur = () => {
+                        const nuevo = parseFloat(input.value);
+                        if (!isNaN(nuevo) && nuevo >= 0) {
+                            p.price = redondear(nuevo);
+                            guardarDatos();
+                            renderizarInventario();
+                            renderizarProductos();
+                            renderizarEstadisticas();
+                            mostrarMensaje(`Precio actualizado: $${p.price.toFixed(2)}`);
+                        }
+                        priceSpan.parentNode.replaceChild(input, priceSpan);
+                        input.focus();
+                    };
+                    input.onkeydown = (ev) => { if (ev.key === 'Enter') input.blur(); };
+                    priceSpan.parentNode.replaceChild(input, priceSpan);
+                    input.focus();
+                    input.select();
+                };
+                priceCell.appendChild(priceSpan);
+
+                // STOCK EDITABLE (Registra compras si se aumenta)
+                const stockCell = row.insertCell(3);
+                const stockSpan = document.createElement('span');
+                stockSpan.className = 'editable-stock';
+                stockSpan.innerText = p.stock;
+                stockSpan.title = 'Clic para editar stock';
+                stockSpan.onclick = () => {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.value = p.stock;
+                    input.style.width = '70px';
+                    input.style.background = 'rgba(22,16,10,0.9)';
+                    input.style.border = '1px solid #D4AF37';
+                    input.style.color = '#FFF';
+                    input.style.borderRadius = '20px';
+                    input.style.padding = '4px 10px';
+                    input.style.textAlign = 'center';
+                    input.onblur = () => {
+                        const nuevo = parseInt(input.value);
+                        if (!isNaN(nuevo) && nuevo >= 0) {
+                            const diferencia = nuevo - p.stock;
+                            if (diferencia > 0) {
+                                registrarCompra(p.id, diferencia);
+                                mostrarMensaje(`📦 +${diferencia} unidades compradas (acumulado: ${compras[p.id] || 0})`);
+                            }
+                            p.stock = nuevo;
+                            guardarDatos();
+                            renderizarInventario();
+                            renderizarProductos();
+                        }
+                        stockSpan.parentNode.replaceChild(input, stockSpan);
+                        input.focus();
+                    };
+                    input.onkeydown = (ev) => { if (ev.key === 'Enter') input.blur(); };
+                    stockSpan.parentNode.replaceChild(input, stockSpan);
+                    input.focus();
+                    input.select();
+                };
+                stockCell.appendChild(stockSpan);
+
+                // DELETE BUTTON
+                const delBtn = document.createElement('button');
+                delBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Eliminar';
+                delBtn.className = 'btn-danger';
+                delBtn.style.padding = '6px 14px';
+                delBtn.style.fontSize = '0.75rem';
+                delBtn.onclick = () => {
+                    if (confirm(`¿Eliminar ${p.name}?`)) {
+                        productos = productos.filter(prod => prod.id !== p.id);
+                        delete ventas[p.id];
+                        delete compras[p.id];
+                        guardarDatos();
+                        renderizarInventario();
+                        renderizarProductos();
+                        renderizarEstadisticas();
+                        actualizarFiltroGrupos();
+                        mostrarMensaje('Producto eliminado');
+                    }
+                };
+                row.insertCell(4).appendChild(delBtn);
+            });
+        }
+
+        function actualizarFiltroGrupos() {
+            const select = document.getElementById('groupFilter');
+            if (!select) return;
+            const grupos = [...new Set(productos.map(p => p.group))].sort();
+            select.innerHTML = '<option value="all">Todos los grupos</option>' + grupos.map(g => `<option value="${g}">${g}</option>`).join('');
+        }
+
+        function agregarProducto() {
+            const grupo = document.getElementById('prodGroup').value.trim();
+            const nombre = document.getElementById('prodType').value.trim();
+            const precio = parseFloat(document.getElementById('prodPrice').value);
+            const stock = parseInt(document.getElementById('prodStock').value);
+            if (!grupo || !nombre || isNaN(precio) || isNaN(stock) || precio < 0 || stock < 0) {
+                mostrarMensaje('Complete todos los campos correctamente', 'error');
+                return;
+            }
+            const nuevoId = nextId++;
+            productos.push({ id: nuevoId, group: grupo, name: nombre, price: redondear(precio), stock: stock });
+            if (stock > 0) {
+                registrarCompra(nuevoId, stock);
+            }
+            guardarDatos();
+            ['prodGroup', 'prodType', 'prodPrice', 'prodStock'].forEach(id => document.getElementById(id).value = '');
+            renderizarInventario();
+            renderizarEstadisticas();
+            renderizarProductos();
+            actualizarFiltroGrupos();
+            mostrarMensaje('✅ Producto agregado exitosamente');
+        }
+
+        // ── MOSTRAR HISTORIAL DE COMPRAS ────
+        function mostrarHistorialCompras() {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+            const productosConCompras = productos.filter(p => (compras[p.id] || 0) > 0);
+            if (productosConCompras.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="2" style="text-align:center; color:#9a8b75;">Aún no se han registrado compras (reabastecimientos).</td></tr>';
+            } else {
+                productosConCompras.forEach(p => {
+                    const totalComprado = compras[p.id] || 0;
+                    const row = tbody.insertRow();
+                    row.insertCell(0).innerText = `${p.group} - ${p.name}`;
+                    row.insertCell(1).innerText = totalComprado;
+                });
+            }
+            document.getElementById('historyModal').style.display = 'flex';
+        }
+
+        // ── REINICIAR HISTORIAL DE COMPRAS ──
+        function reiniciarHistorialCompras() {
+            if (confirm('⚠️ ¿Estás seguro de que quieres reiniciar todo el historial de compras?\n\nEsta acción eliminará permanentemente todos los registros de reabastecimiento acumulados.')) {
+                compras = {};
+                guardarDatos();
+                mostrarHistorialCompras(); // Refrescar el modal
+                renderizarEstadisticas(); // no afecta ventas
+                mostrarMensaje('📦 Historial de compras reiniciado');
+            }
+        }
+
+        // ── REINICIAR STOCK (NO BORRA VENTAS) ──
+        function reiniciarStock() {
+            if (confirm('¿Restaurar todo el stock a 10 unidades?\n\n⚠️ Esto NO borrará las ganancias ni estadísticas de ventas. Solo se repondrá el inventario.\n\n📦 Las unidades añadidas se registrarán en el historial de compras.')) {
+                productos.forEach(p => { 
+                    const aumento = 10 - p.stock;
+                    if (aumento > 0) registrarCompra(p.id, aumento);
+                    p.stock = 10; 
+                });
+                carrito = [];
+                guardarDatos();
+                renderizarProductos();
+                renderizarCarrito();
+                renderizarInventario();
+                renderizarEstadisticas();
+                actualizarFiltroGrupos();
+                mostrarMensaje('🔄 Stock reiniciado a 10 (historial de compras actualizado)');
+            }
+        }
+
+        // ── REINICIAR ESTADÍSTICAS ────────────
+        function reiniciarEstadisticas() {
+            if (confirm('¿Reiniciar estadísticas de ventas a cero?\n\nEsto no afecta el stock actual ni el historial de compras.')) {
+                ventas = {};
+                guardarDatos();
+                renderizarEstadisticas();
+                mostrarMensaje('📊 Estadísticas reiniciadas');
+            }
+        }
+
+        // ── REINICIAR INVENTARIO COMPLETO ─────
+        function reiniciarInventarioCompleto() {
+            if (confirm('¿Restaurar inventario al catálogo original con STOCK 0?\n\n⚠️ Se perderán productos personalizados agregados. Las estadísticas de ventas NO se borrarán.\n\n📦 El historial de compras se mantendrá.')) {
+                const comprasBackup = { ...compras };
+                inicializarProductos();
+                compras = comprasBackup;
+                carrito = [];
+                guardarDatos();
+                renderizarProductos();
+                renderizarCarrito();
+                renderizarInventario();
+                renderizarEstadisticas();
+                actualizarFiltroGrupos();
+                mostrarMensaje('📦 Inventario restaurado al catálogo base (stock=0)');
+            }
+        }
+
+        function mostrarMensaje(msg, tipo = 'success') {
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.textContent = msg;
+            toast.style.background = tipo === 'error' ? '#a13223' : '#2e7d32';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2100);
+        }
+
+        function limpiarBusqueda() {
+            document.getElementById('searchProduct').value = '';
+            renderizarProductos();
+        }
+
+        function cambiarPestania(tab) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(`${tab}Panel`).classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.tab-btn[data-tab="${tab}"]`).classList.add('active');
+            if (tab === 'seller') { renderizarProductos(); renderizarCarrito(); } else { renderizarInventario(); renderizarEstadisticas(); }
+        }
+
+        function init() {
+            cargarDatos();
+            actualizarFiltroGrupos();
+            renderizarProductos();
+            renderizarCarrito();
+            renderizarInventario();
+            renderizarEstadisticas();
+
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => cambiarPestania(btn.dataset.tab)));
+            document.getElementById('addProductBtn').addEventListener('click', agregarProducto);
+            document.getElementById('generateInvoiceBtn').addEventListener('click', generarFactura);
+            document.getElementById('closeInvoiceBtn').addEventListener('click', () => document.getElementById('invoiceModal').style.display = 'none');
+            document.getElementById('resetInventoryFullBtn').addEventListener('click', reiniciarInventarioCompleto);
+            document.getElementById('resetSalesStatsBtn').addEventListener('click', reiniciarEstadisticas);
+            document.getElementById('forceResetBtn').addEventListener('click', reiniciarStock);
+            document.getElementById('clearSearchBtn').addEventListener('click', limpiarBusqueda);
+            document.getElementById('searchProduct').addEventListener('input', renderizarProductos);
+            document.getElementById('groupFilter').addEventListener('change', renderizarProductos);
+            document.getElementById('invoiceModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('invoiceModal')) document.getElementById('invoiceModal').style.display = 'none';
+            });
+
+            // Historial de compras
+            document.getElementById('showHistoryBtn').addEventListener('click', mostrarHistorialCompras);
+            document.getElementById('closeHistoryBtn').addEventListener('click', () => document.getElementById('historyModal').style.display = 'none');
+            document.getElementById('historyModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('historyModal')) document.getElementById('historyModal').style.display = 'none';
+            });
+            // Botón de reinicio dentro del modal
+            document.getElementById('resetHistoryBtn').addEventListener('click', reiniciarHistorialCompras);
+
+            // Ripple en botones primarios
+            document.querySelectorAll('.btn-primary, .btn-add-card').forEach(btn => {
+                btn.addEventListener('click', function(e) { agregarRipple(e, this); });
+            });
+        }
+        init();
+    </script>
+</body>
+</html>
